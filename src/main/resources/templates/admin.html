@@ -176,7 +176,7 @@
         <form th:action="@{/editUser}" method="POST">
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content text-center h5 fw-bold">
                         <div class="modal-header">
                             <h5 class="modal-title" id="editModalLabel">Edit User</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -184,8 +184,8 @@
                         <div class="modal-body">
 
                             <div class="mb-3">
-<!--                                <label for="modalId" class="col-form-label">ID:</label>-->
-                                <input  type="hidden" class="form-control" id="modalId" name="id" value="" />
+                                <label for="modalId" class="col-form-label ">ID:</label>
+                                <input  type="text" class="form-control" id="modalId" name="id" value="" />
                             </div>
 
                             <div class="mb-3">
@@ -217,14 +217,14 @@
                                 <input type="hidden" class="form-control" id="modalUsername" name="username" value="" />
                             </div>
 
-<!--                            <div class="mb-3">-->
-<!--                                <label for="modalRoles" class="col-form-label">Roles:</label>-->
-<!--                                <input type="text" class="form-control" id="modalRoles" name="modalRoles" value="" />-->
-<!--                            </div>-->
-
-                            <select id="modalRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>
+                            <div class="mb-3">
+                                <label for="modalRoles" class="col-form-label">Role:</label>
+                                <select id="modalRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>
                                 <option th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>
-                            </select>
+                                </select>
+                            </div>
+
+
 
 
 <!--                            <select th:field="${user.roles}" style="max-height: 50px" class="form-select" multiple  />-->
