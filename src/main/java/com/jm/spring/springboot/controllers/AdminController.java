@@ -23,6 +23,9 @@ public class AdminController {
         this.userRepository = userRepository;
     }
 
+
+
+
     @GetMapping("/admin")
     public String userList(Model model, Principal principal){
         model.addAttribute("thisUser", userServiceImpl.findUserByName(principal.getName()));

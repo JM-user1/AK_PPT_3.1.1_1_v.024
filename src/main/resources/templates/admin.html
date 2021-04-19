@@ -87,7 +87,7 @@
                                     <h3 class="m-3">All users</h3>
                                     <div class="tab-pane fade show active bg-white p-3" id="home" role="tabpanel" aria-labelledby="users-tab">
                                         <hr class="m-0" style="border: 1px solid rgb(147, 147, 148);">
-                                        <table class="table table-striped table-hover bg-white m-0">
+                                        <table class="table  table-striped table-hover bg-white m-0">
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -100,34 +100,27 @@
                                                     <th>Delete</th>
                                                 </tr>
                                             </thead>
-                                            <tr th:each="user :${allUsers}">
-                                                <td th:text="${user.id}">id</td>
-                                                <td th:text="${user.firstname}">firstname</td>
-                                                <td th:text="${user.lastname}">lastname</td>
-                                                <td th:text="${user.age}">age</td>
-                                                <td th:text="${user.email}">email</td>
-                                                <td th:each="role :${user.roles}" th:text="${role.name}">roles</td>
-                                                <td>
-                                                    <a th:href="@{findUserById/(id=${user.id})}" class="btn btn-primary eBtn">Edit</a>
+                                            <tbody class="allUsers">
 
-                                                    <!--                                                    <button th:href="@{/edit/{id}(id=${user.getId()})}" type="button" class="btn  btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
-                                                    <!--                                                        Launch demo modal Edit-->
-                                                    <!--                                                    </button>-->
+                                            </tbody>
 
-                                                    <!--                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
-                                                    <!--                                                        Launch demo modal-->
-                                                    <!--                                                      </button>-->
+<!--                                            <tr class="userRow" >-->
 
-                                                    <!--                                                    <a th:href="@{/edit/{id}(id=${user.getId()})}" class="btn btn-primary eBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="@fat">Edit</a>-->
-                                                    <!--                                                    <a th:href="@{findUserById/{id}(id=${user.id})}" class="btn btn-primary eBtn" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="@fat">Edit</a>-->
-
-                                                </td>
-                                                <td>
-                                                    <form th:method="DELETE" th:action="@{/{id}(id=${user.getId()})}">
-                                                        <input type="submit" value="delete" class="btn btn-danger" />
-                                                    </form>
-                                                </td>
-                                            </tr>
+<!--                                                <td th:text="${user.id}">id</td>-->
+<!--                                                <td th:text="${user.firstname}">firstname</td>-->
+<!--                                                <td th:text="${user.lastname}">lastname</td>-->
+<!--                                                <td th:text="${user.age}">age</td>-->
+<!--                                                <td th:text="${user.email}">email</td>-->
+<!--                                                <td th:each="role :${user.roles}" th:text="${role.name}">roles</td>-->
+<!--                                                <td>-->
+<!--                                                    <a th:href="@{findUserById/(id=${user.id})}" class="btn btn-primary eBtn">Edit</a>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <form th:method="DELETE" th:action="@{/{id}(id=${user.getId()})}">-->
+<!--                                                        <input type="submit" value="delete" class="btn btn-danger" />-->
+<!--                                                    </form>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
                                         </table>
 
                                     </div>
@@ -144,7 +137,7 @@
                                                 <label for="email" class="col-form-label-lg">Email</label>
                                                 <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="Email" />
                                                 <label for="password" class="col-form-label-lg">Password</label>
-                                                <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Password" />
+                                                <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Password" autocomplete="on" />
                                                 <br>
                                                 <select th:field="*{roles}" style="max-height: 50px" class="form-select" multiple aria-label="пример множественного выбора" />
                                                     <option id="allRoles" th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>
@@ -210,7 +203,7 @@
 
                             <div class="mb-3">
                                 <label for="modalPassword" class="col-form-label">Password:</label>
-                                <input type="password" class="form-control" id="modalPassword" name="password" value="" />
+                                <input type="password" class="form-control" id="modalPassword" name="password" value="" autocomplete="on" />
                             </div>
 
                             <div class="mb-3">
@@ -248,4 +241,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script th:src="@{/newJS/main.js}" src="../static/newJS/main.js"></script>
 </body>
-< /html>
+</html>
