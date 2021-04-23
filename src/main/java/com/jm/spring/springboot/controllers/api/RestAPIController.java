@@ -18,12 +18,13 @@ public class RestAPIController {
         this.userRepository = userRepository;
     }
 
+
     @GetMapping("/users")
     public List<User> userList(){
         return userServiceImpl.allUsers();
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public User user(@PathVariable Long id){
         return userServiceImpl.findUserById(id);
     }
@@ -34,15 +35,16 @@ public class RestAPIController {
          return user;
     }
 
-    @PutMapping("/users")
-    public User updateUser(@RequestBody User user){
+    @PutMapping ("/api/users")
+    public @ResponseBody String updateUser(@RequestBody User user){
         userServiceImpl.saveUser(user);
-        return user;
+        return "/index";
     }
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Long id){
+    public String  deleteUser(@PathVariable Long id){
         userServiceImpl.deleteUser(id);
+        return "/index";
     }
 
 }

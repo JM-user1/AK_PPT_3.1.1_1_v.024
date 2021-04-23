@@ -101,7 +101,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="allUsers">
-
+                                                <a class="btn btn-primary eBtn" id="editUser" data-bs-toggle="modal" data-bs-target="#editModalForm">Test Edit</a>
                                             </tbody>
 
 <!--                                            <tr class="userRow" >-->
@@ -166,8 +166,8 @@
 
 
     <div class="editModalForm">
-        <form th:action="@{/editUser}" method="POST">
-            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <form>
+            <div class="modal fade" id="editModalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content text-center h5 fw-bold">
                         <div class="modal-header">
@@ -193,7 +193,7 @@
 
                             <div class="mb-3">
                                 <label for="modalAge" class="col-form-label">Age:</label>
-                                <input type="text" class="form-control" id="modalAge" name="age" value="" />
+                                <input type="number" class="form-control" id="modalAge" name="age" value="" />
                             </div>
 
                             <div class="mb-3">
@@ -217,25 +217,94 @@
                                 </select>
                             </div>
 
-
-
-
-<!--                            <select th:field="${user.roles}" style="max-height: 50px" class="form-select" multiple  />-->
-<!--                             <option th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
-<!--                            &lt;!&ndash;                                                <option th:each="role : ${allRoles}" th:value="${role}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                                    <option th:each="role: ${allRoles}" th:text="${role.name}" th:value="${role.name}" th:selected="(${role.name} == *{roles.})" >ADMIN</option>&ndash;&gt;-->
-<!--                            </select>-->
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-primary" value="Edit User" />
+                            <input type="submit" class="btn btnModal" value="Edit User" />
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+
+
+
+<!--    <div class="editModalForm">-->
+<!--        <form th:action="@{/editUser}" method="POST">-->
+<!--            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">-->
+<!--                <div class="modal-dialog">-->
+<!--                    <div class="modal-content text-center h5 fw-bold">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h5 class="modal-title" id="editModalLabel">Edit User</h5>-->
+<!--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+
+<!--                            <div class="mb-3">-->
+<!--                                <label for="modalId" class="col-form-label ">ID:</label>-->
+<!--                                <input  type="text" class="form-control" id="modalId" name="id" value="" />-->
+<!--                            </div>-->
+
+<!--                            <div class="mb-3">-->
+<!--                                <label for="modalName" class="col-form-label">User Name:</label>-->
+<!--                                <input type="text" class="form-control" id="modalName" name="firstname" value="" />-->
+<!--                            </div>-->
+
+<!--                            <div class="mb-3">-->
+<!--                                <label for="modalLastName" class="col-form-label">Last Name:</label>-->
+<!--                                <input type="text" class="form-control" id="modalLastName" name="lastname" value="" />-->
+<!--                            </div>-->
+
+<!--                            <div class="mb-3">-->
+<!--                                <label for="modalAge" class="col-form-label">Age:</label>-->
+<!--                                <input type="text" class="form-control" id="modalAge" name="age" value="" />-->
+<!--                            </div>-->
+
+<!--                            <div class="mb-3">-->
+<!--                                <label for="modalEmail" class="col-form-label">Email:</label>-->
+<!--                                <input type="email" class="form-control" id="modalEmail" name="email" value="" />-->
+<!--                            </div>-->
+
+<!--                            <div class="mb-3">-->
+<!--                                <label for="modalPassword" class="col-form-label">Password:</label>-->
+<!--                                <input type="password" class="form-control" id="modalPassword" name="password" value="" autocomplete="on" />-->
+<!--                            </div>-->
+
+<!--                            <div class="mb-3">-->
+<!--                                <input type="hidden" class="form-control" id="modalUsername" name="username" value="" />-->
+<!--                            </div>-->
+
+<!--                            <div class="mb-3">-->
+<!--                                <label for="modalRoles" class="col-form-label">Role:</label>-->
+<!--                                <select id="modalRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>-->
+<!--                                <option th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+
+
+
+
+<!--&lt;!&ndash;                            <select th:field="${user.roles}" style="max-height: 50px" class="form-select" multiple  />&ndash;&gt;-->
+<!--&lt;!&ndash;                             <option th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;                                                <option th:each="role : ${allRoles}" th:value="${role}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;                                                    <option th:each="role: ${allRoles}" th:text="${role.name}" th:value="${role.name}" th:selected="(${role.name} == *{roles.})" >ADMIN</option>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            </select>&ndash;&gt;-->
+
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                            <input type="submit" class="btn btn-primary" value="Edit User" />-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+
+
     <!-- +++++++++++++++++++ -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
