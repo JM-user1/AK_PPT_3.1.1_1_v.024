@@ -41,18 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //                .antMatchers("/admin/**").permitAll()
                 .antMatchers("/registration").not().fullyAuthenticated()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN","USER")//"/admin/**","/admin","/news"
-                .antMatchers("/news").hasAnyRole("USER","ADMIN")
-                .antMatchers("/", "/resources/**").permitAll()
+                .antMatchers("/").hasAnyRole("ADMIN","USER")//"/admin/**","/admin","/news"
+//                .antMatchers("/news").hasAnyRole("USER","ADMIN")
+                .antMatchers( "/resources/**","/api/**","/users").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/index")
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login");
     }
 
     @Autowired

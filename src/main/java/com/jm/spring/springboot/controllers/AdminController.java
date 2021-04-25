@@ -23,7 +23,13 @@ public class AdminController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
+
+
+    @GetMapping("/index")
     public String userList(Model model, Principal principal){
         model.addAttribute("thisUser", userServiceImpl.findUserByName(principal.getName()));
         model.addAttribute("allUsers", userServiceImpl.allUsers());
@@ -31,7 +37,7 @@ public class AdminController {
         model.addAttribute("userForm", new User());
         model.addAttribute("allRoles", userServiceImpl.allRoles());
 
-        return "admin";
+        return "index";
     }
 
 
@@ -55,7 +61,7 @@ public class AdminController {
         userForm.setUsername(userForm.getEmail());
         userServiceImpl.saveUser(userForm);
 
-        return "redirect:/admin";
+        return "redirect:/index";
     }
 
 
@@ -63,7 +69,7 @@ public class AdminController {
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") Long id){
         userServiceImpl.deleteUser(id);
-        return "redirect:/admin";
+        return "redirect:/index";
     }
 
     @GetMapping("/findUserById")
@@ -73,26 +79,26 @@ public class AdminController {
         return userServiceImpl.findUserById(id);
     }
 
-    @PostMapping("/editUser")
-    public String editUser(User user){
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("user.getUsername(): "+user.getRoles());
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
-
-        userServiceImpl.updateUser(user);
-        return "redirect:/admin";
-    }
+//    @PostMapping("/editUser")
+//    public String editUser(User user){
+//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+//        System.out.println("user.getUsername(): "+user.getRoles());
+//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+//
+//        userServiceImpl.updateUser(user);
+//        return "redirect:/index";
+//    }
 
     @GetMapping("/edit/{id}")
     public String editUser( ModelMap modelMap, @PathVariable("id") Long id){
         modelMap.addAttribute("user",userServiceImpl.getById(id));
-        return "/admin";
+        return "/index";
     }
 
-    @PatchMapping("/edit/{id}")
-    public String editUser(@ModelAttribute("user") User user, @PathVariable("id")Long id){
-        userServiceImpl.editUser(id, user);
-        return "redirect:/admin";
-    }
+//    @PatchMapping("/edit/{id}")
+//    public String editUser(@ModelAttribute("user") User user, @PathVariable("id")Long id){
+//        userServiceImpl.editUser(id, user);
+//        return "redirect:/index";
+//    }
 
 }
