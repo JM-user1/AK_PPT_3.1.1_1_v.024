@@ -41,64 +41,22 @@ public class AdminController {
     }
 
 
-//    @GetMapping("/registration")
-//    public String registration(Model model) {
-//        model.addAttribute("userForm", new User());
-//        model.addAttribute("allRoles", userServiceImpl.allRoles());
-//        return "registration";
-//    }
 
-    @PostMapping()
-    public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "admin";
-        }
-        if (!userServiceImpl.saveUser(userForm)){
-            model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
-            return "admin";
-        }
-        userForm.setUsername(userForm.getEmail());
-        userServiceImpl.saveUser(userForm);
-
-        return "redirect:/index";
-    }
-
-
-
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable("id") Long id){
-        userServiceImpl.deleteUser(id);
-        return "redirect:/index";
-    }
-
-    @GetMapping("/findUserById")
-    @ResponseBody
-    public User findUserById(Long id){
-
-        return userServiceImpl.findUserById(id);
-    }
-
-//    @PostMapping("/editUser")
-//    public String editUser(User user){
-//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
-//        System.out.println("user.getUsername(): "+user.getRoles());
-//        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+//    @PostMapping()
+//    public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
 //
-//        userServiceImpl.updateUser(user);
+//        if (bindingResult.hasErrors()) {
+//            return "admin";
+//        }
+//        if (!userServiceImpl.saveUser(userForm)){
+//            model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
+//            return "admin";
+//        }
+//        userForm.setUsername(userForm.getEmail());
+//        userServiceImpl.saveUser(userForm);
+//
 //        return "redirect:/index";
 //    }
 
-    @GetMapping("/edit/{id}")
-    public String editUser( ModelMap modelMap, @PathVariable("id") Long id){
-        modelMap.addAttribute("user",userServiceImpl.getById(id));
-        return "/index";
-    }
-
-//    @PatchMapping("/edit/{id}")
-//    public String editUser(@ModelAttribute("user") User user, @PathVariable("id")Long id){
-//        userServiceImpl.editUser(id, user);
-//        return "redirect:/index";
-//    }
 
 }

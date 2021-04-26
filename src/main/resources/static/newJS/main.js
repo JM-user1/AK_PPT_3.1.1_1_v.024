@@ -1,15 +1,18 @@
 const allUsers = document.querySelector('.allUsers');
-let modalForm = document.querySelector('.editModalForm form')
-const btns = document.querySelector('.eBtn');
+const addUserForm = document.forms.addUserForm;
+let modalForm = document.forms.modalFormName;
+const {idModalForm} = document.forms;
+const usersTab = document.querySelector('#users-tab');
 const modals = document.querySelector('#editModalForm');
 const modalsBtn = document.querySelector('.modal-footer .btnModal');
 const hiddenInput = document.querySelector('input[name="_method"]');
 const url = 'http://localhost:8080/api/users';
 
-let output = '';
+
 
 //=========================== Таблица Юзеров =========================
 const userList = (users) =>{
+    let output = '';
     users.forEach(user => {
         output += `
                 <tr id="${user.id}">
@@ -33,37 +36,82 @@ const userList = (users) =>{
 
 
 //=========================== Таблица Юзеров =========================
-fetch(url)
-    .then(response => response.json())
-    .then(data => userList(data))
+let userListUpdate = () =>{
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            userList(data)
+        })
+}
 
+userListUpdate()
 
-//=========================== Удаление Юзеров =========================
+usersTab.addEventListener('click',(event) =>{
+    event.preventDefault();
+
+    userListUpdate();
+})
+
+addUserForm.addEventListener('click',(event) =>{
+    event.preventDefault();
+
+    let addNewUserBtn = event.target.id === 'addUser';
+
+    let roleNewUser;
+    if (addNewUserBtn) {
+
+        let addNewUser = {
+            "id": addUserForm.id.value,
+            "firstname": addUserForm.firstname.value,
+            "lastname": addUserForm.lastname.value,
+            "age": addUserForm.age.value,
+            "email": addUserForm.email.value,
+            "username": addUserForm.email.value,
+            "password": addUserForm.password.value,
+            "roles": Array.from(addUserForm.roles.options).filter(op => op.selected)
+                .map(op => roleNewUser = {
+                    name: op.id,
+                    id: op.value
+                })
+        }
+
+        fetch(`${url}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(addNewUser),
+        })
+
+    }
+
+})
+
 allUsers.addEventListener('click',(evt) => {
     evt.preventDefault();
     const parent = evt.target.parentElement.parentElement;
+
     let id = parent.querySelector('td').textContent;
     let firstName = parent.querySelector('#modalFirstname').textContent;
     let lastName = parent.querySelector('#modalLastname').textContent;
     let age = parent.querySelector('#modalAge').textContent;
     let email = parent.querySelector('#modalEmail').textContent;
     let password = parent.querySelector('#modalPassword').textContent;
-    let rolesName = parent.querySelector('#modalRolesName').textContent;
-    let rolesId = parent.querySelector('#modalRolesId').textContent;
-
-
+    let rolesName = parent.querySelectorAll('#modalRolesName');
+    let roles = ()=> {
+        return Array.prototype.map.call(rolesName, (t) => {return t.textContent})
+    }
 
     let deleteBtnIsPressed = evt.target.id === 'deleteUser';
     let editBtnIsPressed = evt.target.id === 'editUser';
 
-
     let modalOut = () =>{
-        modals.querySelector('.modal-body #modalId').value = id;
-        modals.querySelector('.modal-body #modalName').value = firstName;
-        modals.querySelector('.modal-body #modalLastName').value = lastName;
-        modals.querySelector('.modal-body #modalAge').value = age;
-        modals.querySelector('.modal-body #modalEmail').value = email;
-        modals.querySelector('.modal-body #modalRoles').value = rolesName;
+        modalForm.id.value = id;
+        modalForm.firstname.value = firstName;
+        modalForm.lastname.value = lastName;
+        modalForm.age.value = age;
+        modalForm.email.value = email;
+        modalForm.roles.options.value = roles() ;
     }
 
     if(deleteBtnIsPressed){
@@ -73,120 +121,73 @@ allUsers.addEventListener('click',(evt) => {
         modalsBtn.value = "Delete";
         modalOut();
     }
-        //=========================== Нужно сделать удаление через модалку =========================
     if(editBtnIsPressed){
 
         modalForm.setAttribute('action','/api/users/');
+        console.log(modalForm)
         hiddenInput.setAttribute('value', 'patch')
-        // modalForm.setAttribute('method','PUT');
         modalsBtn.setAttribute('class','btn btnModal btn-primary')
         modalsBtn.value = "Edit User";
-        // modalsBtn.classList.add('btn-primary');
-        //=============Разобраться с ID
         modalOut();
-        // console.log()
-        // myModal.show()
     }
-
     modalForm.addEventListener('click',(event)=> {
         event.preventDefault();
 
 
-        // fetch(`${url}/${id}`).then(response =>{
-        //     return response.json();
-        // }).then(data => {
-        //     user =  data;
-        //     // console.log(data);
-        // });
-
         let btnFrmEdit = event.target.value === 'Edit User';
         let btnFormDelete = event.target.value === 'Delete';
-
-        let forBody ={
-            user:{
-                id: id,
-                firstname: firstName,
-                lastName: lastName,
-                age: age,
-                email: email,
-                password: password,
-                roles:[
-                    {
-                        name: rolesName,
-                        id: rolesId,
-                    }
-                ]
-            }
-        }
 
 
         if(btnFormDelete){
             fetch(`${url}/${id}`,{
                 method: 'DELETE',
             })
-            .then(u => u.json())
-            .then(() => $('.editModalForm').modal('hide'))
-            //     .then(users =>userList(users))
-            // console.log(event.target.closest('tr'))
         }
 
 
+        let role;
+        if (btnFrmEdit) {
 
-        if(btnFrmEdit){
 
-            console.log(forBody)
-            fetch(`${url}/${id}`,{
-                method: 'PATCH',
+            let userOut = {
+                "id": modalForm.id.value,
+                "firstname": modalForm.firstname.value,
+                "lastname": modalForm.lastname.value,
+                "age": modalForm.age.value,
+                "email": modalForm.email.value,
+                "username": modalForm.email.value,
+                "password": modalForm.password.value,
+                "roles": Array.from(modalForm.roles.options).filter(option => option.selected)
+                    .map(option => role = {
+                        name: option.value,
+                        id: option.id
+                    })
+            }
+            fetch(`${url}/${id}`, {
+                method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json;charset=utf-8'
                 },
-                body: JSON.stringify( forBody)
+                body: JSON.stringify(userOut),
             })
-            .then(resp=> resp.json())
-            .then(() => $('.editModalForm').modal('hide'))
-
+            // .then(resp => resp.json())
         }
 
-        // modalForm.modal('hide');
+
+        userListUpdate()
+
     }, false)
 
 })
 
+function setNewEntry(entry) {
+    $('#block').html(getNewEntry($('#block').html(), entry));
+}
 
+function getNewEntry(oldHTML, newHTML) {
+    if(newHTML == '')
+        return newHTML;
+    else
+        return oldHTML + newHTML;
+}
 
-
-//=========================== Модалка =========================
-
-// btns.forEach((el) => {
-//     el.addEventListener('click',(e)=>{
-//         let path
-//     })
-// })
-
-//========================================= jQuery ===================================
-// $(document).ready(function() {
-//
-//     // let roles = $(user.roles);
-//     // console.log(roles);
-//     $('.table .eBtn').on('click', function(event) {
-//         event.preventDefault();
-//         const href = $(this).attr('href');
-//         const text = $(this).text();
-//         if (text === 'Edit') {
-//             $.get(href, function (user, status) {
-//                 console.log(user)
-//
-//                 $('.editModalForm #modalId').val(user.id);
-//                 $('.editModalForm #modalName').val(user.firstname);
-//                 $('.editModalForm #modalLastName').val(user.lastname);
-//                 $('.editModalForm #modalAge').val(user.age);
-//                 $('.editModalForm #modalEmail').val(user.email);
-//                 $('.editModalForm #modalUsername').val(user.email);
-//                 $('.editModalForm #modalPassword').val();
-//                 $('.editModalForm #modalRoles').val(user.roles);
-//             });
-//
-//             $('.editModalForm #editModal').modal('show');
-//         }
-//     });
-// });

@@ -29,23 +29,17 @@ public class RestAPIController {
         return userServiceImpl.findUserById(id);
     }
 
-    @PostMapping("users")
+    @PostMapping(produces = "application/json",value = "/users")
     public User addNewUser(@RequestBody User user){
          userServiceImpl.saveUser(user);
          return user;
     }
 
-    @PatchMapping ("/users/{id}")
-    public void updateUser(@RequestBody User user){
+    @PutMapping (produces = "application/json",value = "/users/{id}")
+    public void updateUser( @RequestBody User user){
         userServiceImpl.updateUser(user);
     }
 
-//    @PatchMapping("/users/{id}")
-//    @ResponseBody
-//    public void editUser(@RequestBody User user, @PathVariable Long id){
-//        userServiceImpl.editUser(id, user);
-////        return "redirect:/index";
-//    }
 
     @DeleteMapping("/users/{id}")
     public void  deleteUser(@PathVariable Long id){

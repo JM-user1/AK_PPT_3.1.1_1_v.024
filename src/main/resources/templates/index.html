@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade " id="v-pills-home" role="tabpanel" aria-labelledby="admin-tab">
-                        <div class="m-4">
+                        <div  class="m-4">
                             <h1>Admin panel</h1>
 
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -101,32 +101,13 @@
                                         </tr>
                                         </thead>
                                         <tbody class="allUsers">
-                                        <a class="btn btn-primary eBtn" id="editUser" data-bs-toggle="modal" data-bs-target="#editModalForm">Test Edit</a>
                                         </tbody>
-
-                                        <!--                                            <tr class="userRow" >-->
-
-                                        <!--                                                <td th:text="${user.id}">id</td>-->
-                                        <!--                                                <td th:text="${user.firstname}">firstname</td>-->
-                                        <!--                                                <td th:text="${user.lastname}">lastname</td>-->
-                                        <!--                                                <td th:text="${user.age}">age</td>-->
-                                        <!--                                                <td th:text="${user.email}">email</td>-->
-                                        <!--                                                <td th:each="role :${user.roles}" th:text="${role.name}">roles</td>-->
-                                        <!--                                                <td>-->
-                                        <!--                                                    <a th:href="@{findUserById/(id=${user.id})}" class="btn btn-primary eBtn">Edit</a>-->
-                                        <!--                                                </td>-->
-                                        <!--                                                <td>-->
-                                        <!--                                                    <form th:method="DELETE" th:action="@{/{id}(id=${user.getId()})}">-->
-                                        <!--                                                        <input type="submit" value="delete" class="btn btn-danger" />-->
-                                        <!--                                                    </form>-->
-                                        <!--                                                </td>-->
-                                        <!--                                            </tr>-->
                                     </table>
 
                                 </div>
                                 <div class="tab-pane fade container" id="profile" role="tabpanel" aria-labelledby="new-user-tab">
                                     <div class="row justify-content-center">
-                                        <form style="max-width: 500px" class="form-control bg-white mx-auto col-6" th:method="POST" action="#" th:action="@{/}" th:object="${userForm}">
+                                        <form name="addUserForm" style="max-width: 500px" class="form-control bg-white mx-auto col-6" th:method="POST" action="#" th:action="@{/}" th:object="${userForm}">
                                             <h2>Add new user</h2>
                                             <label for="name" class="col-form-label-lg">First Name</label>
                                             <input class="form-control" type="text" th:field="*{firstname}" id="name" placeholder="Username" />
@@ -139,13 +120,14 @@
                                             <label for="password" class="col-form-label-lg">Password</label>
                                             <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Password" autocomplete="on" />
                                             <br>
-                                            <select th:field="*{roles}" style="max-height: 50px" class="form-select" multiple aria-label="пример множественного выбора" />
-                                            <option id="allRoles" th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>
-                                            <!--                                                <option th:each="role : ${allRoles}" th:value="${role}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
-                                            <!--                                                    <option th:each="role: ${allRoles}" th:text="${role.name}" th:value="${role.name}" th:selected="(${role.name} == *{roles.})" >ADMIN</option>-->
+                                            <select id="addUserRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>
+                                            <!--                            <option th:each="role : ${allRoles}" th:value="${role.getName()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
+                                            <option value="1" id="ROLE_USER" >USER</option>
+                                            <option value="2" id="ROLE_ADMIN">ADMIN</option>
+
                                             </select>
                                             <br>
-                                            <button type="submit" class="btn btn-success">Add new user</button>
+                                            <button id="addUser" type="submit" class="btn btn-success">Add new user</button>
                                         </form>
                                     </div>
                                 </div>
@@ -155,8 +137,6 @@
                 </div>
                 <br>
 
-                <a href="/">Home</a>
-                <h4><a href="/news">News</a></h4>
             </div>
         </div>
     </div>
@@ -166,7 +146,7 @@
 
 
 <div class="editModalForm">
-    <form method="post">
+    <form id="idModalForm" name="modalFormName" method="post">
         <input type="hidden" name="_method" value="">
         <div class="modal fade" id="editModalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -213,97 +193,29 @@
 
                         <div class="mb-3">
                             <label for="modalRoles" class="col-form-label">Role:</label>
+<!--                            <select id="modalRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>-->
+<!--                            <option th:each="role : ${allRoles}" th:value="${role.getName()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
+<!--                            </select>-->
+
                             <select id="modalRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>
-                            <option th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>
+<!--                            <option th:each="role : ${allRoles}" th:value="${role.getName()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
+                            <option value="ROLE_USER" id="1">USER</option>
+                            <option value="ROLE_ADMIN" id="2">ADMIN</option>
+
                             </select>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btnModal" value="Edit User" />
+                        <input type="submit" class="btn btnModal"
+                               onclick="setNewEntry('Pressed button 1'); return false;" href="#" value="Edit User" />
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
-
-
-
-<!--    <div class="editModalForm">-->
-<!--        <form th:action="@{/editUser}" method="POST">-->
-<!--            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">-->
-<!--                <div class="modal-dialog">-->
-<!--                    <div class="modal-content text-center h5 fw-bold">-->
-<!--                        <div class="modal-header">-->
-<!--                            <h5 class="modal-title" id="editModalLabel">Edit User</h5>-->
-<!--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                        </div>-->
-<!--                        <div class="modal-body">-->
-
-<!--                            <div class="mb-3">-->
-<!--                                <label for="modalId" class="col-form-label ">ID:</label>-->
-<!--                                <input  type="text" class="form-control" id="modalId" name="id" value="" />-->
-<!--                            </div>-->
-
-<!--                            <div class="mb-3">-->
-<!--                                <label for="modalName" class="col-form-label">User Name:</label>-->
-<!--                                <input type="text" class="form-control" id="modalName" name="firstname" value="" />-->
-<!--                            </div>-->
-
-<!--                            <div class="mb-3">-->
-<!--                                <label for="modalLastName" class="col-form-label">Last Name:</label>-->
-<!--                                <input type="text" class="form-control" id="modalLastName" name="lastname" value="" />-->
-<!--                            </div>-->
-
-<!--                            <div class="mb-3">-->
-<!--                                <label for="modalAge" class="col-form-label">Age:</label>-->
-<!--                                <input type="text" class="form-control" id="modalAge" name="age" value="" />-->
-<!--                            </div>-->
-
-<!--                            <div class="mb-3">-->
-<!--                                <label for="modalEmail" class="col-form-label">Email:</label>-->
-<!--                                <input type="email" class="form-control" id="modalEmail" name="email" value="" />-->
-<!--                            </div>-->
-
-<!--                            <div class="mb-3">-->
-<!--                                <label for="modalPassword" class="col-form-label">Password:</label>-->
-<!--                                <input type="password" class="form-control" id="modalPassword" name="password" value="" autocomplete="on" />-->
-<!--                            </div>-->
-
-<!--                            <div class="mb-3">-->
-<!--                                <input type="hidden" class="form-control" id="modalUsername" name="username" value="" />-->
-<!--                            </div>-->
-
-<!--                            <div class="mb-3">-->
-<!--                                <label for="modalRoles" class="col-form-label">Role:</label>-->
-<!--                                <select id="modalRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>-->
-<!--                                <option th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
-<!--                                </select>-->
-<!--                            </div>-->
-
-
-
-
-<!--&lt;!&ndash;                            <select th:field="${user.roles}" style="max-height: 50px" class="form-select" multiple  />&ndash;&gt;-->
-<!--&lt;!&ndash;                             <option th:each="role : ${allRoles}" th:value="${role.getId()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>&ndash;&gt;-->
-<!--&lt;!&ndash;                            &lt;!&ndash;                                                <option th:each="role : ${allRoles}" th:value="${role}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                            &lt;!&ndash;                                                    <option th:each="role: ${allRoles}" th:text="${role.name}" th:value="${role.name}" th:selected="(${role.name} == *{roles.})" >ADMIN</option>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                            </select>&ndash;&gt;-->
-
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                            <input type="submit" class="btn btn-primary" value="Edit User" />-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-
-
 
 
 <!-- +++++++++++++++++++ -->
