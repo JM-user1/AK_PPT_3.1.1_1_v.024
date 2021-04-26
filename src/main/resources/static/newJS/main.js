@@ -147,7 +147,6 @@ allUsers.addEventListener('click',(evt) => {
         let role;
         if (btnFrmEdit) {
 
-
             let userOut = {
                 "id": modalForm.id.value,
                 "firstname": modalForm.firstname.value,
