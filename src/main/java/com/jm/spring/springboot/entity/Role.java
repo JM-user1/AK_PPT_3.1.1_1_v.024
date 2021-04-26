@@ -1,10 +1,8 @@
 package com.jm.spring.springboot.entity;
 
-import org.springframework.data.annotation.Transient;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -14,9 +12,6 @@ public class Role implements GrantedAuthority {
     private Long Id;
     private String name;
 
-//    @Transient
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private User user;
 
     public Role() {
     }
@@ -42,13 +37,6 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     @Override
     public String getAuthority() {

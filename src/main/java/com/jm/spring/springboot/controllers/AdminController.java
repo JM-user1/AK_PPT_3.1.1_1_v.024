@@ -40,23 +40,4 @@ public class AdminController {
         return "index";
     }
 
-
-
-//    @PostMapping()
-//    public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return "admin";
-//        }
-//        if (!userServiceImpl.saveUser(userForm)){
-//            model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
-//            return "admin";
-//        }
-//        userForm.setUsername(userForm.getEmail());
-//        userServiceImpl.saveUser(userForm);
-//
-//        return "redirect:/index";
-//    }
-
-
 }
