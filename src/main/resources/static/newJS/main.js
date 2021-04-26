@@ -144,7 +144,6 @@ allUsers.addEventListener('click',(evt) => {
             })
         }
 
-
         let role;
         if (btnFrmEdit) {
 
