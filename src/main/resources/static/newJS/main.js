@@ -117,7 +117,7 @@ allUsers.addEventListener('click',(evt) => {
     if(deleteBtnIsPressed){
 
         modalsBtn.setAttribute('class','btn btnModal btn-danger')
-        // modalsBtn.classList.add('btn-danger');
+
         modalsBtn.value = "Delete";
         modalOut();
     }

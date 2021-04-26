@@ -14,9 +14,6 @@ public class Role implements GrantedAuthority {
     private Long Id;
     private String name;
 
-//    @Transient
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private User user;
 
     public Role() {
     }
