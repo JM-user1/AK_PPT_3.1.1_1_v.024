@@ -18,8 +18,6 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @PersistenceContext(unitName = "entityManagerFactory")
-    private  EntityManager em;
     @Autowired
     private final UserRepository userRepository;
     @Autowired
@@ -48,11 +46,6 @@ public class UserServiceImpl implements UserService {
     public Role findRoleById(Long roleId){
         Optional<Role> roleFromDB = roleRepository.findById(roleId);
         return roleFromDB.orElse(new Role());
-    }
-
-    public List<User> usergtList(Long idMin) {
-        return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
-                .setParameter("paramId", idMin).getResultList();
     }
 
     @Override

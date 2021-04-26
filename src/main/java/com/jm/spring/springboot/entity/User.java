@@ -1,15 +1,17 @@
 package com.jm.spring.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User implements UserDetails {
 
   @Id
@@ -24,9 +26,26 @@ public class User implements UserDetails {
   private String password;
 
   @ManyToMany( fetch = FetchType.LAZY)
-  private Set<Role> roles;
+  @JsonIgnore
+  private Set<Role> roles = new HashSet<>();
 
   public User() {
+  }
+
+  public Set<Role> getRolesFromJson() {
+    return roles;
+  }
+
+  @JsonProperty("roles")
+  public void setRolesFromJson(Set<Role> rolesJson) {
+    for (Role r:rolesJson
+    ) {
+      addRole(r);
+    };
+  }
+
+  public void addRole(Role role) {
+    roles.add(role);
   }
 
   public Long getId() {
@@ -39,7 +58,7 @@ public class User implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return roles;
   }
 
   @Override
