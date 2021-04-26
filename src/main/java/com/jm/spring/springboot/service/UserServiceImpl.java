@@ -58,11 +58,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean saveUser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
-//        Set<Role> roleFromDB = user.getRoles();
+
         if (userFromDB != null) {
             return false;
         }
-//        user.setRoles(Collections.singleton(role));
+
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
