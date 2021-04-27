@@ -41,23 +41,14 @@ public class RestAPIController {
 
     @PostMapping(produces = "application/json", value = "/users")
     public ResponseEntity<?> addNewUser(@RequestBody User user) {
-        userServiceImpl.saveUser(user);
-        String encode = user.getPassword();
-        if (user.getId() != 0) { // update user
-            if (encode.isEmpty()) { //  password not changed
-                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            } else {
-                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            }
-        } else { //new user
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        }
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userServiceImpl.saveUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(produces = "application/json", value = "/users/{id}")
     public void updateUser(@RequestBody User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userServiceImpl.updateUser(user);
     }
 

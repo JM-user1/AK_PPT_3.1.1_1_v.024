@@ -28,17 +28,13 @@
         <div class="d-flex align-items-start">
             <div class="col-sm-2 nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                  aria-orientation="vertical">
-                <!--                    <div class="nav-link" sec:authorize="hasAnyRole('ADMIN','USER')">-->
                 <button class="nav-link active" id="user-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
                         type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">User
                 </button>
-                <!--                    </div>-->
-                <!--                    <div sec:authorize="hasRole('ADMIN')">-->
                 <button sec:authorize="hasRole('ADMIN')" class="nav-link" id="admin-tab" data-bs-toggle="pill"
                         data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
                         aria-selected="true">Admin
                 </button>
-                <!--                    </div>-->
             </div>
             <div class="col-sm bg-light min-vh-100">
                 <div class="tab-content" id="v-pills-tabContent">
@@ -145,7 +141,6 @@
                                             <br>
                                             <select id="addUserRoles" name="roles" style="max-height: 50px"
                                                     class="form-select" multiple/>
-                                            <!--                            <option th:each="role : ${allRoles}" th:value="${role.getName()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
                                             <option value="1" id="ROLE_USER">USER</option>
                                             <option value="2" id="ROLE_ADMIN">ADMIN</option>
 
@@ -219,12 +214,8 @@
 
                         <div class="mb-3">
                             <label for="modalRoles" class="col-form-label">Role:</label>
-                            <!--                            <select id="modalRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>-->
-                            <!--                            <option th:each="role : ${allRoles}" th:value="${role.getName()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
-                            <!--                            </select>-->
 
                             <select id="modalRoles" name="roles" style="max-height: 50px" class="form-select" multiple/>
-                            <!--                            <option th:each="role : ${allRoles}" th:value="${role.getName()}" th:text="${#strings.replace(role.getName(), 'ROLE_', '')}">ADMIN </option>-->
                             <option value="ROLE_USER" id="1">USER</option>
                             <option value="ROLE_ADMIN" id="2">ADMIN</option>
 
