@@ -9,9 +9,8 @@ const hiddenInput = document.querySelector('input[name="_method"]');
 const url = 'http://localhost:8080/api/users';
 
 
-
 //=========================== Таблица Юзеров =========================
-const userList = (users) =>{
+const userList = (users) => {
     let output = '';
     users.forEach(user => {
         output += `
@@ -22,8 +21,8 @@ const userList = (users) =>{
                     <td id="modalAge">${user.age}</td>
                     <td id="modalEmail">${user.email}</td>
                     <td hidden id="modalPassword">${user.password}</td>
-                    <td id="modalRolesName">${user.roles.map(role=>role.name)}</td>
-                    <td hidden id="modalRolesId">${user.roles.map(role=>role.id)}</td>
+                    <td id="modalRolesName">${user.roles.map(role => role.name)}</td>
+                    <td hidden id="modalRolesId">${user.roles.map(role => role.id)}</td>
                     <td><a class="btn btn-primary eBtn" id="editUser" data-bs-toggle="modal" data-bs-target="#editModalForm">Edit</a></td>  
 <!--                data-bs-toggle="modal" data-bs-target="#editModalForm"-->
                     <td><button type="button" class="btn btn-danger" userId="${user.id}" id="deleteUser" 
@@ -31,12 +30,12 @@ const userList = (users) =>{
                 </tr> 
             `;
     });
-    allUsers.innerHTML= output;
+    allUsers.innerHTML = output;
 }
 
 
 //=========================== Таблица Юзеров =========================
-let userListUpdate = () =>{
+let userListUpdate = () => {
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -46,13 +45,13 @@ let userListUpdate = () =>{
 
 userListUpdate()
 
-usersTab.addEventListener('click',(event) =>{
+usersTab.addEventListener('click', (event) => {
     event.preventDefault();
 
     userListUpdate();
 })
 
-addUserForm.addEventListener('click',(event) =>{
+addUserForm.addEventListener('click', (event) => {
     event.preventDefault();
 
     let addNewUserBtn = event.target.id === 'addUser';
@@ -87,7 +86,7 @@ addUserForm.addEventListener('click',(event) =>{
 
 })
 
-allUsers.addEventListener('click',(evt) => {
+allUsers.addEventListener('click', (evt) => {
     evt.preventDefault();
     const parent = evt.target.parentElement.parentElement;
 
@@ -98,39 +97,41 @@ allUsers.addEventListener('click',(evt) => {
     let email = parent.querySelector('#modalEmail').textContent;
     let password = parent.querySelector('#modalPassword').textContent;
     let rolesName = parent.querySelectorAll('#modalRolesName');
-    let roles = ()=> {
-        return Array.prototype.map.call(rolesName, (t) => {return t.textContent})
+    let roles = () => {
+        return Array.prototype.map.call(rolesName, (t) => {
+            return t.textContent
+        })
     }
 
     let deleteBtnIsPressed = evt.target.id === 'deleteUser';
     let editBtnIsPressed = evt.target.id === 'editUser';
 
-    let modalOut = () =>{
+    let modalOut = () => {
         modalForm.id.value = id;
         modalForm.firstname.value = firstName;
         modalForm.lastname.value = lastName;
         modalForm.age.value = age;
         modalForm.email.value = email;
-        modalForm.roles.options.value = roles() ;
+        modalForm.roles.options.value = roles();
     }
 
-    if(deleteBtnIsPressed){
+    if (deleteBtnIsPressed) {
 
-        modalsBtn.setAttribute('class','btn btnModal btn-danger')
+        modalsBtn.setAttribute('class', 'btn btnModal btn-danger')
 
         modalsBtn.value = "Delete";
         modalOut();
     }
-    if(editBtnIsPressed){
+    if (editBtnIsPressed) {
 
-        modalForm.setAttribute('action','/api/users/');
+        modalForm.setAttribute('action', '/api/users/');
         console.log(modalForm)
         hiddenInput.setAttribute('value', 'patch')
-        modalsBtn.setAttribute('class','btn btnModal btn-primary')
+        modalsBtn.setAttribute('class', 'btn btnModal btn-primary')
         modalsBtn.value = "Edit User";
         modalOut();
     }
-    modalForm.addEventListener('click',(event)=> {
+    modalForm.addEventListener('click', (event) => {
         event.preventDefault();
 
 
@@ -138,8 +139,8 @@ allUsers.addEventListener('click',(evt) => {
         let btnFormDelete = event.target.value === 'Delete';
 
 
-        if(btnFormDelete){
-            fetch(`${url}/${id}`,{
+        if (btnFormDelete) {
+            fetch(`${url}/${id}`, {
                 method: 'DELETE',
             })
         }
@@ -184,7 +185,7 @@ function setNewEntry(entry) {
 }
 
 function getNewEntry(oldHTML, newHTML) {
-    if(newHTML == '')
+    if (newHTML == '')
         return newHTML;
     else
         return oldHTML + newHTML;

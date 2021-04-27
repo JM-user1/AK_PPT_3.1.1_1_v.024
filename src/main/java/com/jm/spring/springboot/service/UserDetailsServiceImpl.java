@@ -31,10 +31,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername()
-                ,user.getPassword(),mapAuthorities(user.getRoles()));
+                , user.getPassword(), mapAuthorities(user.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> mapAuthorities(Collection<Role> roles){
+    private Collection<? extends GrantedAuthority> mapAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }

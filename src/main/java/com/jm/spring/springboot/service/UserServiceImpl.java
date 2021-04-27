@@ -34,16 +34,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Long userId) {
-//      return   userRepository.getOne(userId);
         Optional<User> userFromDB = userRepository.findById(userId);
         return userFromDB.orElse(new User());
     }
 
-    public User findUserByName(String name){
-        return  userRepository.findByUsername(name);
+    public User findUserByName(String name) {
+        return userRepository.findByUsername(name);
     }
 
-    public Role findRoleById(Long roleId){
+    public Role findRoleById(Long roleId) {
         Optional<Role> roleFromDB = roleRepository.findById(roleId);
         return roleFromDB.orElse(new Role());
     }
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 //        user.setRoles(Collections.singleton(role));
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }
@@ -87,22 +86,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public List<Role> allRoles(){ return roleRepository.findAll();}
-
-    public void editUser(Long id, User user) {
-    User updatedUser = findUserById(id);
-    updatedUser.setUsername(user.getEmail());
-    updatedUser.setPassword(user.getPassword());
-    userRepository.save(updatedUser);
+    public List<Role> allRoles() {
+        return roleRepository.findAll();
     }
 
     @Override
     public User getById(Long id) {
         User user = findUserById(id);
-        System.out.println("Имя Юзверя: "+ user.getUsername());
+        System.out.println("Имя Юзверя: " + user.getUsername());
         return user;
     }
-
 
 
 }
