@@ -47,9 +47,10 @@ public class RestAPIController {
     }
 
     @PutMapping(produces = "application/json", value = "/users/{id}")
-    public void updateUser(@RequestBody User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+
         userServiceImpl.updateUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
